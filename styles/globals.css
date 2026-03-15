@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-deep: #020810;
+  --bg-base: #050f1e;
+  --bg-surface: #081628;
+  --bg-elevated: #0c1e38;
+  --bg-glass: rgba(8, 22, 40, 0.7);
+
+  --cyan: #00d4ff;
+  --cyan-dim: rgba(0, 212, 255, 0.15);
+  --cyan-glow: rgba(0, 212, 255, 0.4);
+  --purple: #a855f7;
+  --purple-dim: rgba(168, 85, 247, 0.15);
+  --magenta: #e879f9;
+  --green: #00ff94;
+  --green-dim: rgba(0, 255, 148, 0.12);
+  --amber: #fbbf24;
+  --amber-dim: rgba(251, 191, 36, 0.15);
+  --red: #ff3d5a;
+  --red-dim: rgba(255, 61, 90, 0.15);
+  --blue: #3b82f6;
+
+  --border: rgba(0, 212, 255, 0.12);
+  --border-bright: rgba(0, 212, 255, 0.35);
+
+  --text-primary: #e0f2fe;
+  --text-secondary: #6b90b0;
+  --text-muted: #2d4a62;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'Rajdhani', sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: var(--bg-surface); }
+::-webkit-scrollbar-thumb { background: var(--cyan-glow); border-radius: 2px; }
+
+/* Glass morphism */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+.glass-bright {
+  background: rgba(8, 22, 40, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-bright);
+}
+
+/* Glow effects */
+.glow-cyan {
+  box-shadow: 0 0 20px var(--cyan-glow), 0 0 60px rgba(0, 212, 255, 0.1);
+}
+.glow-purple {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 60px rgba(168, 85, 247, 0.1);
+}
+.glow-green {
+  box-shadow: 0 0 16px rgba(0, 255, 148, 0.4);
+}
+.glow-red {
+  box-shadow: 0 0 16px rgba(255, 61, 90, 0.5);
+}
+.glow-amber {
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.4);
+}
+
+/* Text glow */
+.text-glow-cyan { text-shadow: 0 0 12px var(--cyan), 0 0 24px rgba(0, 212, 255, 0.3); }
+.text-glow-purple { text-shadow: 0 0 12px var(--purple), 0 0 24px rgba(168, 85, 247, 0.3); }
+
+/* Animated gradient border */
+@keyframes border-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.border-animated {
+  position: relative;
+}
+.border-animated::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, #00d4ff, #a855f7, #00ff94, #00d4ff);
+  background-size: 300% 300%;
+  animation: border-rotate 4s ease infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.border-animated:hover::before {
+  opacity: 1;
+}
+
+/* Scan line overlay */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(transparent, rgba(0, 212, 255, 0.08), transparent);
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Pulsing dots */
+@keyframes ping-slow {
+  0% { transform: scale(1); opacity: 0.8; }
+  70%, 100% { transform: scale(2.2); opacity: 0; }
+}
+.ping-slow { animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+
+/* Room status animations */
+@keyframes room-pulse-green {
+  0%, 100% { box-shadow: 0 0 6px rgba(0, 255, 148, 0.3); }
+  50% { box-shadow: 0 0 18px rgba(0, 255, 148, 0.7), 0 0 30px rgba(0, 255, 148, 0.2); }
+}
+@keyframes room-pulse-red {
+  0%, 100% { box-shadow: 0 0 8px rgba(255, 61, 90, 0.4); }
+  50% { box-shadow: 0 0 22px rgba(255, 61, 90, 0.8), 0 0 40px rgba(255, 61, 90, 0.25); }
+}
+@keyframes room-pulse-amber {
+  0%, 100% { box-shadow: 0 0 8px rgba(251, 191, 36, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.7), 0 0 35px rgba(251, 191, 36, 0.2); }
+}
+@keyframes room-pulse-blue {
+  0%, 100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+  50% { box-shadow: 0 0 25px rgba(59, 130, 246, 0.9), 0 0 45px rgba(59, 130, 246, 0.3); }
+}
+
+.room-green { animation: room-pulse-green 3s ease-in-out infinite; }
+.room-red { animation: room-pulse-red 1.5s ease-in-out infinite; }
+.room-amber { animation: room-pulse-amber 2s ease-in-out infinite; }
+.room-blue { animation: room-pulse-blue 1.2s ease-in-out infinite; }
+
+/* HUD corner brackets */
+.hud-corner {
+  position: relative;
+}
+.hud-corner::before,
+.hud-corner::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--cyan);
+  border-style: solid;
+  opacity: 0.6;
+}
+.hud-corner::before {
+  top: 0; left: 0;
+  border-width: 1px 0 0 1px;
+}
+.hud-corner::after {
+  bottom: 0; right: 0;
+  border-width: 0 1px 1px 0;
+}
+
+/* Number counting animation */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.count-anim { animation: count-up 0.5s ease forwards; }
+
+/* Flicker for alerts */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.4; }
+  94% { opacity: 1; }
+  96% { opacity: 0.6; }
+  97% { opacity: 1; }
+}
+.flicker { animation: flicker 3s infinite; }
+
+/* Data stream line */
+@keyframes stream {
+  0% { stroke-dashoffset: 200; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Particle canvas */
+#particle-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* Utility */
+.font-mono { font-family: 'Share Tech Mono', monospace; }
+.font-orbitron { font-family: 'Orbitron', sans-serif; }
+.font-display { font-family: 'Rajdhani', sans-serif; }
+
+.truncate-fade {
+  mask-image: linear-gradient(to right, black 80%, transparent 100%);
+}
+
+/* Custom recharts */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(0, 212, 255, 0.06) !important;
+}
+.recharts-tooltip-wrapper {
+  outline: none !important;
+}
